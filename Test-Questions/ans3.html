@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cafe Search</title>
+  </head>
+  <body>
+    <div>
+      <input type="text" id="searchInput" oninput="searchCafes()" />
+    </div>
+    <table id="cafeTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Street No</th>
+          <th>Locality</th>
+          <th>Postal Code</th>
+        </tr>
+      </thead>
+      <tbody id="cafeBody"></tbody>
+    </table>
+
+    <script>
+      async function fetchData(url) {
+        const response = await fetch(url);
+        const data = await response.json();
+        return data;
+      }
+
+      async function searchCafes() {
+        const searchTerm = document
+          .getElementById("searchInput")
+          .value.toLowerCase();
+        const cafesResponse = await fetchData(
+          "https://raw.githubusercontent.com/debojyoti/places-fake-rest-api/master/cafes.json"
+        );
+        const placesResponse = await fetchData(
+          "https://raw.githubusercontent.com/debojyoti/places-fake-rest-api/master/places.json"
+        );
+
+        const cafes = cafesResponse.cafes;
+        const places = placesResponse.places;
+
+        const filteredCafes = cafes.filter((cafe) =>
+          cafe.name.toLowerCase().includes(searchTerm)
+        );
+
+        const cafeBody = document.getElementById("cafeBody");
+        cafeBody.innerHTML = "";
+
+        filteredCafes.forEach((cafe) => {
+          const place = places.find((place) => place.id === cafe.location_id);
+          if (place) {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+            <td>${cafe.name}</td>
+            <td>${place.street_no}</td>
+            <td>${place.locality}</td>
+            <td>${place.postal_code}</td>
+          `;
+            cafeBody.appendChild(row);
+          }
+        });
+      }
+
+      window.onload = searchCafes;
+    </script>
+  </body>
+</html>

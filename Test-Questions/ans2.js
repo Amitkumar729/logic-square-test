@@ -8,7 +8,7 @@ function findCaliforniaCafes(searchTerm) {
       { "name": "Hi-Lo Cafe", "place_id": "mjdhgetr4pojfyts22fzfsh" },
       { "name": "Philz Coffee", "place_id": "urhw3837ehalod7w02b7835" }
     ];
-  
+   
     const places = [
       { "id": "12hydbdf76sljfts87sbfis", "street_no": "1B", "locality": "Macarthur Blvd", "postal_code": "20619", "lat": "38.1781 N", "long": "118.4171 W" },
       { "id": "jahgde7wgdiau8ewsahgosd", "street_no": "60H", "locality": "Solomos Island Road", "postal_code": "20688", "lat": "36.7783 N", "long": "119.4179 W" },
